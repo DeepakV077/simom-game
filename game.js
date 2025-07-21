@@ -18,9 +18,10 @@ $(".btn").click(function () {
   
   playSound(userChosenColour);
   animatePress(userChosenColour);
+
+  checkAnswer(userClickedPattern.length - 1);
 });
 
-checkAnswer(userClickedPattern.length - 1);
 
 function nextSequence() {
 
@@ -40,6 +41,25 @@ function nextSequence() {
 };
   
 
+function checkAnswer(currentLevel) {
+  if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+    console.log("success");
+
+    if (userClickedPattern.length === gamePattern.length) {
+      setTimeout(function () {
+        nextSequence();
+        userClickedPattern = [];
+      }, 1000); // wait 1 second before next sequence
+    }
+  } 
+  else {
+    console.log("wrong");
+    // Add any wrong-answer logic here like playing a sound or game over
+  }
+}
+
+
+
 function playSound(name) {
   var audio = new Audio("sounds/" + name + ".mp3");
   audio.play();
@@ -52,12 +72,3 @@ function animatePress(currentColor) {
   }, 100);
 }
 
-
-function checkAnswer(currentLevel) {
-  if(gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
-    console.log("success");
-  }
-  else{
-console.log("wrong");
-  }
-  } 
